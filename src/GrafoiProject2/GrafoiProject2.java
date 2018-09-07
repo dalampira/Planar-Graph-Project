@@ -196,6 +196,31 @@ public class GrafoiProject2 {
         return matrix1;
     }
 
+    /* 
+    * This method creates the M matrix and returns it, using the adjacency
+    * matrix. When a cell of the adjacency matrix equals to "1", we have an edge between 
+    * two vertexes but we keep only the second vertex at the M matrix. When a cell equals 
+    * to "0" at the adjacency matrix, that means we don't have an endge and we also 
+    * get a "0" at the M1 matrix.
+    */
+    public static String[][] create_M_matrix(String[][] adj_matrix){
+        
+        String [][] p_matrix = new String[adj_matrix.length][adj_matrix.length];
+        for (int i=0;i<p_matrix.length;i++){
+            for (int j=0;j<p_matrix.length;j++){
+                if(adj_matrix[i][j].equals("1")){
+                    //Our matrix counts vertexes from 1 so we add 1 (+1) to the
+                   //index number of i and j since the arrays start counting from number zero
+                    p_matrix[i][j]= String.valueOf(j+1);
+                }else{
+                    p_matrix[i][j]="0";
+                }
+            }
+        }
+        
+        return p_matrix;  
+    }
+    
     
     /*
     * This method is used to display the matrices using
