@@ -221,6 +221,27 @@ public class GrafoiProject2 {
         return p_matrix;  
     }
     
+    /*
+    * This method is used to check if we have a hamiltonian circle or path
+    * at the last matrix we create.
+    * @param checkingArray is the array with the sequence of verteces
+    * @param checkingString is the string to be checked if it matches with the edges at the M1 matrix
+    * @param matrixString is the cell of the M1 matrix to be checked with the checkingString 
+    */
+    public static int hamiltonian_circle(String[] checkingArray, String checkingString, String matrixString){
+        int circle=0;
+        //if the checkingString matches with the matrixString, that means we have a hamiltonian circle
+        if (checkingString.equals(matrixString)){
+                       System.out.println("Hamiltonian circle: ");
+                       for(int i=0; i<checkingArray.length; i++){
+                           System.out.print(checkingArray[i]+" ");
+                        }
+                       System.out.println();
+                       System.out.println();
+                       circle = 1;
+                       }
+        return circle;
+    } 
     
     /*
     * This method is used to display the matrices using
