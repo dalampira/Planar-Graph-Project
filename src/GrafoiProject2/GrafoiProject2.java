@@ -260,6 +260,19 @@ public class GrafoiProject2 {
         }
     }
     
+    
+        /*
+    * This method is used to display the content of a one dimension array
+    */
+    public static void displayArray(String[] array){
+        
+        for (int i=0; i<array.length; i++){
+            System.out.print(array[i]+" ");
+        }
+        System.out.println();
+    }
+   
+    
     /**
      * @param args the command line arguments
      */
