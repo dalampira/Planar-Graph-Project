@@ -272,6 +272,36 @@ public class GrafoiProject2 {
         System.out.println();
     }
    
+    /*
+    * This method sets the cells of the adjacency matrix that correspond to the edges of the hamiltonian circle to zero
+    * @return the edges of the hamiltonian circle
+    */
+    public static String[] zeroesToAdjacency(String[] t_circle, String[][] adj_matrix){
+        //We create an array that stores the edges of the hamiltonian circle
+        String[] ham_edges= new String[t_circle.length];
+        for(int i=0; i<t_circle.length; i++){
+            int begin, end;
+            int j=i;
+            if(i==t_circle.length-1){ //When we get to the last element of the circle we have an edge between the last and the first vertex
+                begin = Integer.parseInt(t_circle[i]);
+                begin = begin - 1; //because we start counting from zero to arrays and our hamiltonian circle counts from 1
+                end = Integer.parseInt(t_circle[0]);
+                end = end - 1;
+                ham_edges[i]=t_circle[i]+t_circle[0]; //the edge that appears to the hamiltonian circle
+            }else{
+                begin = Integer.parseInt(t_circle[i]);
+                begin = begin - 1;
+                end = Integer.parseInt(t_circle[j+1]);
+                end = end -1;
+                ham_edges[i]=t_circle[i]+t_circle[j+1]; //the edge that appears to the hamiltonian circle
+            } 
+            //We set the cells to zero since we used that edge for the hamiltonian circle
+            adj_matrix[begin][end]="0"; //The adjacency matrix is symmetrical
+            adj_matrix[end][begin]="0"; //so we have to check both cells
+  
+        }
+        return ham_edges;
+    }
     
     /**
      * @param args the command line arguments
