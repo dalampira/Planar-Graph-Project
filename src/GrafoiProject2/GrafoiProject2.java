@@ -303,6 +303,26 @@ public class GrafoiProject2 {
         return ham_edges;
     }
     
+    /*
+    * This method is used to store the edges that are left out from the hamiltonian circle
+    * and keeps only one copy of them because our adjacency matrix is symmetrical.
+    * @return the arraylist of the edges
+    */
+    public static ArrayList keepingTheEdges(String[][] adj_matrix){
+        ArrayList<String> edges = new ArrayList();
+        for (int i=0; i<adj_matrix.length; i++){
+            for (int j=0; j<adj_matrix.length; j++){ //We check if the adjacency matrix equals to 1 at a specific cell, meaning that there is
+                //an edge. If the same edge doesn't already exist in the arraylist of edges, we add it to the list
+                if (adj_matrix[i][j].equals("1") && !edges.contains(String.valueOf(i+1)+String.valueOf(j+1)) 
+                        && !edges.contains(String.valueOf(j+1)+String.valueOf(i+1))){
+                   edges.add(String.valueOf(i+1) + String.valueOf(j+1)); //The matrix starts counting from 0 and our verteces
+                }                                                        //start counting from 1
+            }
+        }
+       
+       return edges;
+    }
+    
     /**
      * @param args the command line arguments
      */
