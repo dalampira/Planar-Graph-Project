@@ -323,6 +323,22 @@ public class GrafoiProject2 {
        return edges;
     }
     
+    /*
+    * This method is used to add all the vertexes of our graph to a string that we are going
+    * to need later
+    * @return the string with the vertexes
+    */
+    
+    public static String loadVertexes(int number){
+        String vertexes="0";
+        String j;
+        for(int i=0; i<number; i++){
+            j=String.valueOf(i+1);
+            vertexes=vertexes+j;
+        }
+        return vertexes;
+    }
+    
     /**
      * @param args the command line arguments
      */
