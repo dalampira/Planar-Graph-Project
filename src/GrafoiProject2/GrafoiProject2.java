@@ -379,6 +379,143 @@ public class GrafoiProject2 {
         return vertexesArray;
     }
     
+    /*
+    * This method is used to add the remaining edges to the graph. To do so, it requires the 2-d array
+    * of the vertexes that contains the possible connections between them, an arraylist of the edges that
+    * are going to be added and an array that contains the vertexes of the hamiltonian circle.
+    * The method illustates the idea that when we have an edge between two vertexes inside (or outside) the circle
+    * the remaining vertexes can get connected only to the ones that are included to the same path beginning from 
+    * the first vertex and ending to the second vertex. If the vertexes from the one path get connected with the ones
+    * from the other path inside (or outside) of the circle the previous edge and these ones would be crossed.
+    * @return an array that its first element contains the edges of the set A and the second element 
+    * contains the edges of the set B where set A=edges inside the hamiltonian circle and set B=the edges
+    * outside the hamiltonian circle
+    */
+    public static String[] addEdges(String[][] t_vertexes, ArrayList<String> t_edges, String[] t_circle){
+        String[] array= new String[2]; //is going to be returned with set A at its first index and set B at its second
+        ArrayList<String> a = new ArrayList();
+        ArrayList<String> b = new ArrayList();
+    
+        for(int i=0; i<t_edges.size(); i++){
+            String[] parts = t_edges.get(i).split("");
+            String part1 = parts[0]; //first vertex of the edge to be added
+            String part2 = parts[1]; //second vertex of the edge to be added
+            int index1=0, index2=0;
+            String[] circle_vertexes = new String[2]; //is going to store the vertexes from the two different paths
+            
+            circle_vertexes[0] = "";
+            circle_vertexes[1] = "";
+            
+            for(int m=0; m<t_circle.length; m++){ //we keep the index of the first vertex from the variable t_circle
+                    if(part1.equals(t_circle[m])){
+                        index1=m;
+                    }
+                }
+                for (int k=0; k<t_circle.length; k++){ //we keep the index of the second vertex
+                    if(part2.equals(t_circle[k])){
+                        index2=k;
+                    }
+                }
+                if(index1>index2){
+                    for(int z=index2+1;z<index1; z++){
+                        circle_vertexes[0]=circle_vertexes[0]+t_circle[z]; //we store the vertexes of the one path
+                    }
+                    for(int z=0; z<t_circle.length; z++){
+                        circle_vertexes[1]=circle_vertexes[1]+t_circle[z]; //we store the whole circle to the variable
+                    }    
+                    circle_vertexes[1] = circle_vertexes[1].replace(part1, ""); //we remove the vertexes of the edge
+                    circle_vertexes[1] = circle_vertexes[1].replace(part2, "");
+                    circle_vertexes[1] = circle_vertexes[1].replace(circle_vertexes[0], ""); //we remove the vertexes of the first
+                                                                                             //path and we get the second path
+                    
+                }
+                else{ 
+
+                    for(int z=index1+1;z<index2; z++){
+
+                        circle_vertexes[0]=circle_vertexes[0]+t_circle[z];
+                    }
+                    for(int q=0; q<t_circle.length; q++){
+                        circle_vertexes[1]=circle_vertexes[1]+t_circle[q];
+                    }    
+                    circle_vertexes[1] = circle_vertexes[1].replace(part1, "");
+                    circle_vertexes[1] = circle_vertexes[1].replace(part2, "");
+                    circle_vertexes[1] = circle_vertexes[1].replace(circle_vertexes[0], "");
+                    
+                }
+                String[] single_vertexes1 = circle_vertexes[0].split(""); //we split the paths to single vertexes
+                String[] single_vertexes2 = circle_vertexes[1].split("");
+
+                //if the t_vertexes array at the beginnig vertex of the edge contains the ending vertex of the edge INSIDE the circle
+                if(t_vertexes[Integer.parseInt(part1)-1][0].contains(part2)){
+                    //arrays start counting from 0 but we count the vertexes from 1
+                t_vertexes[Integer.parseInt(part1)-1][0] = t_vertexes[Integer.parseInt(part1)-1][0].replace(part2, ""); //remove the vertex
+                t_vertexes[Integer.parseInt(part1)-1][1] = t_vertexes[Integer.parseInt(part1)-1][1].replace(part2, ""); //remove the vertex since it is already added
+             
+                for(int y=0; y<single_vertexes1.length; y++){ //remove the vertexes of the one path form the others of the second path
+                    for (int x=0;x<single_vertexes2.length;x++){
+                        //arrays start counting from 0 but we count the vertexes from 1
+                        if(t_vertexes[Integer.parseInt(single_vertexes1[y])-1][0].contains(single_vertexes2[x])){
+                            t_vertexes[Integer.parseInt(single_vertexes1[y])-1][0] = t_vertexes[Integer.parseInt(single_vertexes1[y])-1][0].replace(single_vertexes2[x], "");
+                          
+                        } 
+                    }
+                    
+                }
+                //remove the beginning vertex from the ending vertex
+                t_vertexes[Integer.parseInt(part2)-1][0] = t_vertexes[Integer.parseInt(part2)-1][0].replace(part1, ""); //INSIDE the circle
+                t_vertexes[Integer.parseInt(part2)-1][1] = t_vertexes[Integer.parseInt(part2)-1][1].replace(part1, ""); //OUTSIDE the circle
+                for(int y=0; y<single_vertexes2.length; y++){ //remove the vertexes of the second path from the others of the first path
+                    for (int x=0;x<single_vertexes1.length;x++){
+                        if(t_vertexes[Integer.parseInt(single_vertexes2[y])-1][0].contains(single_vertexes1[x])){
+                            t_vertexes[Integer.parseInt(single_vertexes2[y])-1][0] = t_vertexes[Integer.parseInt(single_vertexes2[y])-1][0].replace(single_vertexes1[x], "");
+                           
+                        } 
+                    }
+                    
+                }
+                //add edge to set A
+                a.add(t_edges.get(i));
+               
+            //if the t_vertexes array at the beginnig vertex of the edge contains the ending vertex of the edge OUTSIDE the circle
+            }else if(t_vertexes[Integer.parseInt(part1)-1][1].contains(part2)){
+                //arrays start counting from 0 but we count the vertexes from 1
+                t_vertexes[Integer.parseInt(part1)-1][1] = t_vertexes[Integer.parseInt(part1)-1][1].replace(part2, ""); //remove the vertex
+             
+               for(int y=0; y<single_vertexes1.length; y++){ //remove the vertexes of the one path from the others of the second path
+                    for (int x=0;x<single_vertexes2.length;x++){
+                        if(t_vertexes[Integer.parseInt(single_vertexes1[y])-1][1].contains(single_vertexes2[x])){
+                            t_vertexes[Integer.parseInt(single_vertexes1[y])-1][1] = t_vertexes[Integer.parseInt(single_vertexes1[y])-1][1].replace(single_vertexes2[x], "");
+                          
+                        } 
+                    }
+                    
+                }//remove the beginning vertex from the ending vertex
+                t_vertexes[Integer.parseInt(part2)-1][1] = t_vertexes[Integer.parseInt(part2)-1][1].replace(part1, "");
+                //remove the vertexes of the second path from the ones of the first path
+                    for(int y=0; y<single_vertexes2.length; y++){ 
+                    for (int x=0;x<single_vertexes1.length;x++){
+                        if(t_vertexes[Integer.parseInt(single_vertexes2[y])-1][1].contains(single_vertexes1[x])){
+                            t_vertexes[Integer.parseInt(single_vertexes2[y])-1][1] = t_vertexes[Integer.parseInt(single_vertexes2[y])-1][1].replace(single_vertexes1[x], "");
+                        } 
+                    }
+                    
+                }
+                //add edge to set B
+                b.add(t_edges.get(i));
+            }else{
+                System.out.println("The edges are crossed so the graph can't be planar!");
+                System.exit(0);
+            }
+            
+        }
+        array[0] = String.join(", ", a);
+        array[1] = String.join(", ", b);
+        System.out.println();
+ 
+        return array;
+    }
+    
     /**
      * @param args the command line arguments
      */
