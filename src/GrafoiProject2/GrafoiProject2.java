@@ -339,6 +339,46 @@ public class GrafoiProject2 {
         return vertexes;
     }
     
+    /*
+    * This method is used to create a two-d array that is keeps record of the vertexes that can have an edge between them
+    * It has a size of (number_of_vertexes)*(2), meaning that every row represents a vertex and the first column represents
+    * the vertexex that the current vertex can be connected to INSIDE the hamiltonian circle and the second column represents the
+    * the vertexes that the current vertex can be connected to OUTSIDE the hamiltonian circle
+    * To do that, it needs the array that contains the edges of the hamiltonian circle
+    * @return the array that is created
+    */
+    public static String[][] createArrayForVertexes(String[] ham_edges, int length){
+        String[][] vertexesArray = new String[length][2];
+        for (int i=0;i<length;i++){
+            for(int j=0; j<2; j++){
+                vertexesArray[i][j]=loadVertexes(length); //we load our array with all the vertexes
+            }
+        }
+        int p;
+        for (int i=0; i<length; i++){
+            p=i+1; //arrays start counting from 0 but our vertexes start counting from 1
+            for (int j=0; j<2; j++){ 
+                for(int k=0; k<ham_edges.length; k++){
+                    if(ham_edges[k].contains(String.valueOf(p))){ //if the edge contains the current vertex
+                       String[] v = ham_edges[k].split(""); //we split the edges and we store them
+                       String v1=v[0];                      //to two variables that represent the verteces
+                       String v2=v[1];
+
+                        if(v1.equals(String.valueOf(p))){ //we remove the vertex that the current vertex is connected to
+                                                          //because they are already connected
+                            vertexesArray[i][j] = vertexesArray[i][j].replace(v2, "");
+                        }else{
+                            vertexesArray[i][j] = vertexesArray[i][j].replace(v1, "");
+                        }
+                     
+                    }//remove the current vertex since we want to keep only the vertexes that we can have an edge between them
+                     vertexesArray[i][j] = vertexesArray[i][j].replace(String.valueOf(p), "");
+                }     
+            }
+        }
+        return vertexesArray;
+    }
+    
     /**
      * @param args the command line arguments
      */
