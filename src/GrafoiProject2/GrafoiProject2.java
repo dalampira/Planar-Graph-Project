@@ -532,5 +532,15 @@ public class GrafoiProject2 {
         String[][] adjacency_matrix = loadMatrixData(FILENAME);
         
         
+        //The number of vertexes equals to the length of the adjacency matrix since
+        //we have a square matrix
+        int vertex = adjacency_matrix.length;
+ 
+        //creation of the M1 matrix
+        String [][] matrix = create_M1_matrix(adjacency_matrix);
+               
+        //creation of the M matrix
+        String [][] plain_matrix = create_M_matrix(adjacency_matrix);
+        
     }
 }  
