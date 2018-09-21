@@ -521,6 +521,16 @@ public class GrafoiProject2 {
      */
    public static void main(String[] args) throws Exception{
 
+       //When a file is not provided, the "sample.txt" is used
+        if(args.length<=0){
+            FILENAME = "sample.txt";
+        }else{
+            FILENAME=args[0];
+        }
+        
+        //creation of the adjacency matrix
+        String[][] adjacency_matrix = loadMatrixData(FILENAME);
+        
         
     }
 }  
