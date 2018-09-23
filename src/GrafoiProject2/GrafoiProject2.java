@@ -554,5 +554,71 @@ public class GrafoiProject2 {
         //together and set the result to the newMatrix variable
         newMatrix = multiplyMatrices(matrix, plain_matrix);
         
+         //We already have multiplied two matrices together, so we have a matrice with
+        //three vertexes at some cells. That is why we create a for-loop starting 
+        //from the number of vertexes minus 3 until we have no vertex left,
+        //and we call the method multiplyMatrices() everytime till we reach the end of the graph
+        //and we have visited every vertex
+        for(int i=vertex-3; i>0; i--){
+            newMatrix = multiplyMatrices(newMatrix, plain_matrix);
+        }
+        
+          
+        String[] checking;
+        int ham_circle1, ham_circle2;
+        String[] circle=null;
+        //we trsverse every cell to check if it has a hamiltonian circle
+        search : {
+        for (int i=0; i<newMatrix.length; i++){
+            for(int j=0;j<newMatrix.length; j++){
+                
+                if(!newMatrix[i][j].equals("0")){
+                   if(newMatrix[i][j].contains("|")){ //if the cell of the new matrix contains two sequences
+                       String[] checking1;
+                       String[] checking2;
+                       checking = newMatrix[i][j].split("\\|");
+                       checking1=checking[0].split(""); //We save each sequence to a different array
+                       checking2=checking[1].split(""); //and we name them checking1, checking2
+                       
+                       String trial1= checking1[checking1.length-1]+ checking1[0]; //We save the last and the fist element of 
+                       String trial2= checking2[checking2.length-1]+ checking2[0]; //the array as a string and we name them trial1, trial2
+                       
+                       //We use the function hamiltonian_circle() to check if any of our strings 
+                       //matches with same edges at our adjacency matrix or not
+                       ham_circle1= hamiltonian_circle(checking1,trial1, matrix[j][i] );
+                       if (ham_circle1==1){
+                          circle=checking1;
+                          break search;
+                       }else{
+                           ham_circle2= hamiltonian_circle(checking2,trial2, matrix[j][i] );
+                           if(ham_circle2==1){
+                               circle=checking2;
+                               break search;
+                           }
+                       }
+                       
+                    
+                } else{
+                    //if the cell of the new matrix contains one sequence
+                    checking=newMatrix[i][j].split(""); //We save the path to an array
+                    String trial = checking[checking.length-1]+ checking[0]; //We save the last and the first item of the array as a string
+                    
+                    //We check if the string matches with the same edge or not at the adjacency matrix
+                    ham_circle1=hamiltonian_circle(checking, trial, matrix[j][i]);
+                    if(ham_circle1==1){
+                        circle = checking;
+                        
+                        break search;
+                    }
+
+                    }
+                }
+            }         
+        }
+        }
+        if(circle==null){
+            System.out.println("There is no Hamiltonian circle so the graph can't be planar!");
+            System.exit(0);
+        }
     }
 }  
