@@ -542,5 +542,17 @@ public class GrafoiProject2 {
         //creation of the M matrix
         String [][] plain_matrix = create_M_matrix(adjacency_matrix);
         
+        //We create a new matrix and assign it's cells to "0"
+        String[][] newMatrix = new String [vertex][vertex];
+        for(int i=0; i<vertex;i++){
+            for (int j=0;j<vertex;j++){
+                newMatrix[i][j]="0";
+            }
+        }
+
+        //We multiply the M1 matrix (matrix) and the M matrx (plain_matrix)
+        //together and set the result to the newMatrix variable
+        newMatrix = multiplyMatrices(matrix, plain_matrix);
+        
     }
 }  
