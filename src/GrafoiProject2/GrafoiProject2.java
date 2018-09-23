@@ -620,5 +620,20 @@ public class GrafoiProject2 {
             System.out.println("There is no Hamiltonian circle so the graph can't be planar!");
             System.exit(0);
         }
+        
+        String[] ham_edges=zeroesToAdjacency(circle, adjacency_matrix);
+                        
+        ArrayList<String> edges=keepingTheEdges(adjacency_matrix);
+        
+        String[][] vertecesArray= createArrayForVertexes(ham_edges, circle.length);
+        
+        String[] finalArray = addEdges(vertecesArray, edges, circle);
+        System.out.println("The graph is planar!");
+        String a = finalArray[0];
+        String b = finalArray[1];
+        
+        System.out.println("Set A includes "+ a);
+        System.out.println("Set B includes "+ b);
+        
     }
 }  
