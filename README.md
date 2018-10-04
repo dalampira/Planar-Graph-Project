@@ -5,8 +5,8 @@
 <p>To do so, this project implements a <i>heuristic method</i> called <strong>circle-chord method</strong>.</p>
 <p>It consists of a step-by-step method of drawing the graph, edge-by-edge without crossing any edges.
 </p>
-<p><u>Step One:</u>  Find a circuit that contains all the vertices of the graph.	(Recall: a circuit is a path that ends where it starts)
+<p>__**Step One:**__  Find a circuit that contains all the vertices of the graph.	(Recall: a circuit is a path that ends where it starts)
 </p>
-<p><mark>Step Two:</mark>  Draw this circuit as a large circle.</p>
-<p><mark>Step Three:</mark> Choose one chord, and decide to draw it either inside or outside the circle. If chosen correctly, it will force certain other chords to be drawn opposite to the circle. (Inside if the first chord was drawn outside, and vice versa.)
+<p>__**Step Two:**__  Draw this circuit as a large circle.</p>
+<p>__**Step Three:**__ Choose one chord, and decide to draw it either inside or outside the circle. If chosen correctly, it will force certain other chords to be drawn opposite to the circle. (Inside if the first chord was drawn outside, and vice versa.)
 </p>
